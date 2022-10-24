@@ -5,20 +5,10 @@ const app = express();
 app.use(express.urlencoded({extended: true}));
 
 app.set(express.static(`${__dirname}`));
-app.use('/css', express.static(path.join(`${__dirname}`,'css')));
+app.use('/css', express.static(path.join(`${__dirname}`,'view', 'css')));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(`${__dirname}`, "view"));
-
-const dayStyle = `body {
-   background-color: lightblue;
-   color: black;
-}`;
-
-const nightStyle = `body {
-   background-color: black;
-   color: white;
-}`;
 
 app.get('/', (req,res)=> {
    const date = new Date();
@@ -28,7 +18,7 @@ app.get('/', (req,res)=> {
 
    res.render("index", {
       time: date.toTimeString(),
-      css: isDay? dayStyle: nightStyle
+      css: isDay? '/css/day.css': '/css/night.css'
    });
 });
 
